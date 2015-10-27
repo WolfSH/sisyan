@@ -63,7 +63,7 @@ guidata(hObject, handles);
 
 
 % --- Outputs from this function are returned to the command line.
-function varargout = Lab2_SAB_OutputFcn(hObject, eventdata, handles) 
+function varargout = Lab2_SAB_OutputFcn(hObject, eventdata, handles)
 % varargout  cell array for returning output args (see VARARGOUT);
 % hObject    handle to figure
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -481,7 +481,7 @@ B = str2double(get(handles.k0,'String'));
 I = get(handles.SPlot,'Value');
 
 J=get(handles.Normed, 'Value')
-if J~=1 
+if J~=1
     J=2
 end
 
@@ -508,23 +508,23 @@ function MenuOpen_Callback(hObject, eventdata, handles)
 [FILENAME, PATHNAME] = uigetfile( ...
                        {'*.txt';'*.*'}, ...
                         'Pick a file');
-% check if 'open' press 
+% check if 'open' press
 if FILENAME~=0
     % create fullname for file
     %FullName = [PATHNAME FILENAME];
     % read data from file
     A = uiimport ([PATHNAME FILENAME]);
-    
+
     [n,m] = size(FILENAME);
     i=1;
-    
+
     while (FILENAME(i)~='.')
        name(i)=FILENAME(i);
        i = i + 1 ;
     end
 
     H = getfield(A,name);
-        
+
     set(Lab2_SAB,'UserData',H);
     set(handles.k0,'Enable','on');
     set(handles.n1,'Enable','on');
@@ -583,15 +583,15 @@ set(handles.MenuSave,'Enable','on');
 
 INP = get(Lab2_SAB,'UserData');
 
-Q = [str2double(get(handles.k0,'String'))  
+Q = [str2double(get(handles.k0,'String'))
      str2double(get(handles.n1,'String'))
      str2double(get(handles.n2,'String'))
      str2double(get(handles.n3,'String'))
      str2double(get(handles.m,'String'))];
- 
+
 N = [str2double(get(handles.LX1,'String'))
      str2double(get(handles.LX2,'String'))
-     str2double(get(handles.LX3,'String'))];  
+     str2double(get(handles.LX3,'String'))];
 
 for i = 1:Q(5)
  S(i,:) = [ 'f' int2str(i)];
@@ -599,8 +599,11 @@ end
 
 set(handles.SPlot,'String',S);
 
+
 X1 = INP(:,1:3); %eto ya1
-X2 = INP(:,4);
+
+X1 = INP(:,1:3);
+
 X3 = INP(:,5:6);
 Y  = INP(:,6:8);
 
@@ -610,13 +613,13 @@ MI = min(Y(1:Q(1),:));
 for i = 1:Q(1)
     Yn(i,:) = (Y(i,:) - MI) ./ (MA - MI); % Norming
     Ynorm(i,:)=Y(i,:)./MA;
-end 
+end
 
 for i = 1:Q(1)
     ma = max(Yn(i,:));
     mi = min(Yn(i,:));
     Y1(i,1) = (ma + mi) / 2; % This is Bq0
-end 
+end
 
 B = 1*ones(Q(1),1); % Polynoms of 0 level
 T1 = B;
@@ -630,14 +633,14 @@ NN = max(N);
 % P3 = ones(NN,1);
 
 ptp = get(handles.Pol1, 'Value')+2*get(handles.Pol2, 'Value')+3*get(handles.Pol3, 'Value')+4*get(handles.Pol4, 'Value');
-        
+
 switch ptp
     case 1.0 %Chebyshev
         for j = 1:Q(2)
             for i = 1:N(1)
                 T1 =[T1,PChebyshev( i,X1(1:Q(1),j) ) ];
             end
-            if (j~=Q(2)) 
+            if (j~=Q(2))
                 T1 =[T1, B];
             end
             grid on;
@@ -651,7 +654,7 @@ switch ptp
             for i = 1:N(2)
                 T2 =[T2, PChebyshev( i,X2(1:Q(1),j) )];
             end
-            if (j~=Q(3)) 
+            if (j~=Q(3))
                 T2 =[T2, B];
             end
             grid on;
@@ -665,7 +668,7 @@ switch ptp
             for i = 1:N(3)
                 T3 =[T3, PChebyshev( i,X3(1:Q(1),j) )];
             end
-            if (j~=Q(4)) 
+            if (j~=Q(4))
                 T3 =[T3, B];
             end
             grid on;
@@ -680,7 +683,7 @@ switch ptp
             for i = 1:N(1)
                 T1 =[T1, PLejandr( i,X1(1:Q(1),j) )];
             end
-            if (j~=Q(2)) 
+            if (j~=Q(2))
                 T1 =[T1, B];
             end
             grid on;
@@ -694,7 +697,7 @@ switch ptp
             for i = 1:N(2)
                 T2 =[T2, PLejandr(i,X2(1:Q(1),j) )];
             end
-            if (j~=Q(3)) 
+            if (j~=Q(3))
                 T2 =[T2, B];
             end
             grid on;
@@ -708,7 +711,7 @@ switch ptp
             for i = 1:N(3)
                 T3 =[T3, PLejandr( i,X3(1:Q(1),j) )];
             end
-            if (j~=Q(4)) 
+            if (j~=Q(4))
                 T3 =[T3, B];
             end
             plot(handles.axes6,[-3:3],PLejandr( N(3),-3:3 ));
@@ -718,12 +721,12 @@ switch ptp
 		for i = 1:N(3)
 			P3 = P3 + XLejandr(i,NN);
 		end
-    case 3.0 %Lagerra      
+    case 3.0 %Lagerra
         for j = 1:Q(2)
             for i = 1:N(1)
                 T1 =[T1, PLagerra( i,X1(1:Q(1),j) )];
             end
-            if (j~=Q(2)) 
+            if (j~=Q(2))
                 T1 =[T1, B];
             end
             plot(handles.axes4,[-3:3],PLagerra( N(1),-3:3 ));
@@ -737,7 +740,7 @@ switch ptp
             for i = 1:N(2)
                 T2 =[T2, PLagerra(i,X2(1:Q(1),j) )];
             end
-            if (j~=Q(3)) 
+            if (j~=Q(3))
                 T2 =[T2, B];
             end
             plot(handles.axes5,[-3:3],PLagerra( N(2),-3:3 ));
@@ -751,7 +754,7 @@ switch ptp
             for i = 1:N(3)
                 T3 =[T3, PLagerra( i,X3(1:Q(1),j) )];
             end
-            if (j~=Q(4)) 
+            if (j~=Q(4))
                 T3 =[T3, B];
             end
             plot(handles.axes6,[-3:3],PLagerra( N(3),-3:3 ));
@@ -761,12 +764,12 @@ switch ptp
 		for i = 1:N(3)
 			P3 = P3 + XLagerra(i,NN);
 		end
-    case 4.0 %Ermit      
+    case 4.0 %Ermit
         for j = 1:Q(2)
             for i = 1:N(1)
                 T1 =[T1, PErmit( i,X1(1:Q(1),j) )];
             end
-            if (j~=Q(2)) 
+            if (j~=Q(2))
                 T1 =[T1, B];
             end
             plot(handles.axes4,[-3:3],PErmit( N(1),-3:3 ));
@@ -780,7 +783,7 @@ switch ptp
             for i = 1:N(2)
                 T2 =[T2, PErmit(i,X2(1:Q(1),j) )];
             end
-            if (j~=Q(3)) 
+            if (j~=Q(3))
                 T2 =[T2, B];
             end
              plot(handles.axes5,[-3:3],PErmit( N(2),-3:3 ));
@@ -794,7 +797,7 @@ switch ptp
             for i = 1:N(3)
                 T3 =[T3, PErmit( i,X3(1:Q(1),j) )];
             end
-            if (j~=Q(4)) 
+            if (j~=Q(4))
                 T3 =[T3, B];
             end
             plot(handles.axes6,[-3:3],PErmit( N(3),-3:3 ));
@@ -819,9 +822,9 @@ else
     L1 = [T1 T2 T3] * L;
     for i = 1:Q(5)
         L1(:,i) = (L1(:,i) - Y1).^2;
-    end   
-    [D,I] = min(sum(L1));    
-    Lambda = L(:,I); 
+    end
+    [D,I] = min(sum(L1));
+    Lambda = L(:,I);
     for i=1:size(L)
         L(i)
     end
@@ -847,7 +850,7 @@ end
 
 A = [CDM(PSI1 ,Yn(1:Q(1),1))' CDM(PSI2 ,Yn(1:Q(1),1))' ...
      CDM(PSI3 ,Yn(1:Q(1),1))']';
- 
+
 for i = 2:Q(5)
     A = [A  [CDM(PSI1 ,Yn(1:Q(1),i))' CDM(PSI2 ,Yn(1:Q(1),i))' ...
              CDM(PSI3 ,Yn(1:Q(1),i))']' ];
@@ -870,8 +873,8 @@ REZ = struct ('Y', F, 'Yn', Fn, 'Er', max(sum((Fn-Yn).^2)), ...
               'Fi', [FI1 FI2 FI3], 'Polynom', [T1 T2 T3], 'INP', Y);%, 'PP', [P1 P2 P3]);
 set(handles.MenuSave,'UserData',REZ);
 max(sum((Fn-Yn).^2))
-nev=num2str(max(sum((Fn-Yn).^2)));         
-set(handles.MaxMisal,'String',nev);              
+nev=num2str(max(sum((Fn-Yn).^2)));
+set(handles.MaxMisal,'String',nev);
 %---------------------------------------------------------------------------------------------------------
 
 % Save data to file ============================================================================= editable
@@ -881,7 +884,7 @@ function MenuSave_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 [FILENAME, PATHNAME] = uiputfile( {'*.txt';'*.*'}, ...
                                    'Save a file');
-% check if 'open' press 
+% check if 'open' press
 if FILENAME~=0
     % create fullname for file
     FullName = [PATHNAME FILENAME];
@@ -889,73 +892,73 @@ if FILENAME~=0
     % fid = menuopen([PATHNAME FILENAME],'w');
     % PATH='D:\IASAFiles\Temp6\Основы системного анализа\Labs_My\Lab2\result.txt';
     % PATH='result.txt';
-    fid=fopen(FullName,'w'); 
-   
+    fid=fopen(FullName,'w');
+
     A = get(handles.MenuSave,'UserData');
-    
+
     fprintf(fid,'Lambda values:\r\n');
-    
+
     for i = 1:size(A.Lambda,1)
         fprintf(fid,'%.8f ',A.Lambda(i,:));
         fprintf(fid,'\r\n');
     end
-    
+
     fprintf(fid,'\r\n');
     fprintf(fid,'Values of A:\r\n');
-    
+
     for i = 1:size(A.A,1)
         fprintf(fid,'%.4f ',A.A(i,:));
         fprintf(fid,'\r\n');
     end
-    
+
     fprintf(fid,'\r\n');
     fprintf(fid,'Values of C:\r\n');
-    
+
     for i = 1:size(A.C,1)
         fprintf(fid,'%.4f ',A.C(i,:));
         fprintf(fid,'\r\n');
     end
-    
+
     fprintf(fid,'\r\n');
     fprintf(fid,'Values of Фi(x1,x2,x3):\r\n');
-    
+
     for i = 1:size(A.Fi,1)
         fprintf(fid,'%.4f ',A.Fi(i,:));
         fprintf(fid,'\r\n');
     end
-    
+
     fprintf(fid,'\r\n');
     fprintf(fid,'Values of Psi:\r\n');
-    
+
     for i = 1:size(A.PSI,1)
         fprintf(fid,'%.4f ',A.PSI(i,:));
         fprintf(fid,'\r\n');
     end
-    
+
     fprintf(fid,'\r\n');
     fprintf(fid,'Values of Polynoms:\r\n');
-    
+
     for i = 1:size(A.Polynom,1)
         fprintf(fid,'%.4f ',A.Polynom(i,:));
         fprintf(fid,'\r\n');
     end
-    
+
     fprintf(fid,'\r\n');
     fprintf(fid,'Values of normed function:\r\n');
-    
+
     for i = 1:size(A.Yn,1)
         fprintf(fid,'%.4f ',A.Yn(i,:));
         fprintf(fid,'\r\n');
     end
-    
+
     fprintf(fid,'\r\n');
     fprintf(fid,'Values of function:\r\n');
-    
+
     for i = 1:size(A.Y,1)
         fprintf(fid,'%.4f ',A.Y(i,:));
         fprintf(fid,'\r\n');
     end
-    
+
     fprintf(fid,'\r\n');
     fprintf(fid,'Evaluation of Фi(x1,x2,x3):\r\n');
     for i = 1:size(A.Y,2)
@@ -968,27 +971,27 @@ if FILENAME~=0
         end
         fprintf(fid,'\r\n');
     end
-    
+
     fprintf(fid,'\r\n');
-    
+
     Q = [str2double(get(handles.n1,'String'))
          str2double(get(handles.n2,'String'))
          str2double(get(handles.n3,'String'))];
 
 	N = [str2double(get(handles.LX1,'String'))
 		str2double(get(handles.LX2,'String'))
-		str2double(get(handles.LX3,'String'))];  
+		str2double(get(handles.LX3,'String'))];
 
 	NN = max(N);
 
-    k = 1; 
+    k = 1;
     for i=1:3
         for j=1:Q(i)
-            Z(k,:) = A.C(i,:).*A.A(j,:); 
+            Z(k,:) = A.C(i,:).*A.A(j,:);
             k = k + 1;
         end
     end
-   
+
     for i = 1:size(Z,2)
         fprintf(fid,'Ф%i(x1,x2,x3)=',i);
         for j = 1:size(Z,1)
@@ -1000,7 +1003,7 @@ if FILENAME~=0
         fprintf(fid,'\r\n');
         fprintf(fid,'\r\n');
     end
-	
+
 	n=Q(1)*(N(1)+1)+Q(2)*(N(2)+1)+Q(3)*(N(3)+1);
 	if (size(A.Lambda,1) ~= n)
 		fprintf(fid,'ERROR IN LAMBDA DIMENSION!');
@@ -1021,40 +1024,40 @@ if FILENAME~=0
 				kk = kk+1;
 			end
 		end
-		
+
 		% P2 = XPol(0,NN);
 		% for i = 1:N(2)
 			% P2 = P2 + XPol(i,NN);
 		% end
-		
+
 		% for i = 1:Q(1)
 			% for j = 1:N(1)+1
-				% PP = 
+				% PP =
                 % % XX1(j,i) = A.Lambda(kk) * A.PP(j,1);
                 % XX1(j,i) = A.Lambda(kk) * A.PP(j,1);
                 % kk = kk+1;
             % end
 		% end
-		
+
 		for i = 1:Q(2)
             for j = 1:N(2)+1
                 P2(:,i) = P2(:,i) + A.Lambda(kk)*XPol(j-1,NN,handles);
                 kk = kk+1;
             end
 		end
-		
+
 		for i = 1:Q(3)
 			for j = 1:N(3)+1
 				P3(:,i) = P3(:,i) + A.Lambda(kk)*XPol(j-1,NN,handles);
 				kk = kk+1;
 			end
 		end
-		
+
 		%XX = [XX1 XX2 XX3];
-		
+
 		for i = 1:size(Z,2)
 			fprintf(fid,'Ф%i([x11,x12],[x21,x22],[x31,x32])=',i); %% BAD COUNT
-						
+
 			%for j = 1:size(Z,1)
 			kk = 1;
 			for j = 1:Q(1)
@@ -1089,7 +1092,7 @@ if FILENAME~=0
     fclose (fid);
     set(handles.ShowRes,'UserData',FullName);
     set(handles.ShowRes,'Enable','on');
-    
+
 end
 %---------------------------------------------------------------------------------------------------------
 
@@ -1104,7 +1107,7 @@ winopen(PATH);
 
 % --- Executes when selected object is changed in uipanelmode.
 function uipanelmode_SelectionChangeFcn(hObject, eventdata, handles)
-% hObject    handle to the selected object in uipanelmode 
+% hObject    handle to the selected object in uipanelmode
 % eventdata  structure with the following fields (see UIBUTTONGROUP)
 %	EventName: string 'SelectionChanged' (read only)
 %	OldValue: handle of the previously selected object or empty if none was selected
