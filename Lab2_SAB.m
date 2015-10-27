@@ -599,7 +599,7 @@ end
 
 set(handles.SPlot,'String',S);
 
-X1 = INP(:,1:3);
+X1 = INP(:,1:3); %eto ya
 X2 = INP(:,4);
 X3 = INP(:,5:6);
 Y  = INP(:,6:8);
