@@ -10,7 +10,7 @@ x = zeros (m, 1);
 d = zeros (m, 1);
 g = -b;
 
-while abs (eps) > 0.0001
+while abs (eps) > 1
     g_prev = g;
     g = A * x - b;
     d = -g + ((g' * g) / (g_prev' * g_prev)) * d;

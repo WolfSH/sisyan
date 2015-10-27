@@ -601,11 +601,9 @@ set(handles.SPlot,'String',S);
 
 
 X1 = INP(:,1:3); %eto ya1
-
-X1 = INP(:,1:3);
-
+X2 = INP(:,4);
 X3 = INP(:,5:6);
-Y  = INP(:,6:8);
+Y  = INP(:,7:8);
 
 MA = max(Y(1:Q(1),:));
 MI = min(Y(1:Q(1),:));
@@ -809,8 +807,8 @@ switch ptp
 		end
 end
 
-%n=Q(2)*(N(1)+1)+Q(3)*(N(2)+1)+Q(4)*(N(3)+1);
-%m=size(Y1);
+n=Q(2)*(N(1)+1)+Q(3)*(N(2)+1)+Q(4)*(N(3)+1);
+m=size(Y1);
 if (get(handles.Lambda3,'Value') == 0 )
     Lambda = CDM([T1 T2 T3],Y1)
    %Lambda = lsqr([T1 T2 T3],Y1)
@@ -829,6 +827,7 @@ else
         L(i)
     end
 end
+
 nr=Yn*0.78432;
 for i=1:Q(2)
     PSI1(:,i) = T1(:,(i-1)*(N(1)+1)+1:i*(N(1)+1)) *...
